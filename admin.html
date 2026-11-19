@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Achadista — novo achado</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .adm { max-width: 760px; margin: 24px auto; background: #fff; border-radius: 8px; box-shadow: var(--shadow); padding: 24px; }
+    .adm h1 { margin-top: 0; font-size: 22px; }
+    .f { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .f label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--ink-2); }
+    .f .wide { grid-column: 1 / -1; }
+    .f input, .f select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; color: var(--ink); }
+    .f .row { flex-direction: row; align-items: center; gap: 8px; }
+    textarea { width: 100%; min-height: 220px; font-family: Consolas, monospace; font-size: 12.5px; margin-top: 12px; }
+    .hint { font-size: 13px; color: var(--ink-2); }
+    @media (max-width: 600px) { .f { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="adm">
+    <h1>Novo achado</h1>
+    <p class="hint">Preencha, clique em <strong>Adicionar</strong> e depois <strong>Baixar deals.json</strong>. Substitua o arquivo <code>deals.json</code> do site pelo baixado. Nada é enviado para servidor nenhum.</p>
+    <form class="f" id="f">
+      <label>Código do post <input name="code" required placeholder="A117"></label>
+      <label>Categoria <select name="category" id="cat"></select></label>
+      <label class="wide">Título <input name="title" required placeholder="Air Fryer 4L ..."></label>
+      <label>Preço atual (R$) <input name="price" type="number" step="0.01" required></label>
+      <label>Preço antigo (R$) <input name="oldPrice" type="number" step="0.01"></label>
+      <label class="wide">Link de afiliado (meli.la/...) <input name="link" type="url" required placeholder="https://meli.la/..."></label>
+      <label class="wide">URL da imagem (opcional) <input name="img" type="url"></label>
+      <label>Emoji (se não tiver imagem) <input name="emoji" placeholder="🛍️"></label>
+      <label>Link do post no Instagram (opcional) <input name="ig" type="url"></label>
+      <label class="row"><input type="checkbox" name="freeShipping"> Frete grátis</label>
+      <label class="row"><input type="checkbox" name="full"> FULL</label>
+      <label class="row"><input type="checkbox" name="expired"> Encerrado</label>
+      <label class="row"><input type="checkbox" name="hot"> 🔥 Quente (candidato a achado do dia)</label>
+      <div class="wide hero-ctas"><button class="btn btn-primary">Adicionar</button><button type="button" class="btn btn-ghost" id="dl">Baixar deals.json</button></div>
+    </form>
+    <textarea id="out" spellcheck="false" aria-label="deals.json"></textarea>
+  </div>
+  <script>
+    const cats = ["beleza","moda","casa","cozinha","bebes","esportes","games","eletronicos","informatica","ferramentas","pet"];
+    document.getElementById("cat").innerHTML = cats.map(c => `<option>${c}</option>`).join("");
+    let data = { deals: [] };
+    const out = document.getElementById("out");
+    const show = () => out.value = JSON.stringify(data, null, 2);
+    fetch("deals.json", { cache: "no-cache" }).then(r => r.json()).then(j => { data = j; show(); }).catch(show);
+    out.addEventListener("change", () => { try { data = JSON.parse(out.value); } catch { alert("JSON inválido"); } });
+    document.getElementById("f").addEventListener("submit", e => {
+      e.preventDefault();
+      const fd = new FormData(e.target), d = {};
+      for (const k of ["code","title","category","link","img","emoji","ig"]) { const v = (fd.get(k) || "").trim(); if (v) d[k] = v; }
+      d.code = d.code.toUpperCase();
+      d.price = +fd.get("price"); if (fd.get("oldPrice")) d.oldPrice = +fd.get("oldPrice"); else d.oldPrice = d.price;
+      for (const k of ["freeShipping","full","hot","expired"]) d[k] = !!fd.get(k);
+      d.added = new Date().toISOString().slice(0, 10);
+      data.deals = data.deals.filter(x => x.code !== d.code);
+      data.deals.unshift(d); show(); e.target.reset();
+    });
+    document.getElementById("dl").onclick = () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([out.value], { type: "application/json" }));
+      a.download = "deals.json"; a.click();
+    };
+  </script>
+</body>
+</html>

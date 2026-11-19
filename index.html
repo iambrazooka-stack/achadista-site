@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Achadista — os melhores achados do Mercado Livre</title>
+  <meta name="description" content="Achadista garimpa as melhores ofertas do Mercado Livre todo dia. Busque pelo código do post do Instagram ou navegue por categoria.">
+  <meta property="og:title" content="Achadista — achados do dia">
+  <meta property="og:description" content="Ofertas garimpadas no Mercado Livre. Viu no Instagram? Digite o código aqui.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔎</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="disclosure">Este site contém <strong>links de afiliado</strong>: se você comprar por eles, o Achadista pode receber uma comissão, sem custo extra para você. <a href="#sobre">Saiba mais</a></div>
+
+  <header class="top">
+    <div class="wrap top-row">
+      <a class="logo" href="./" aria-label="Achadista, página inicial">
+        <span class="logo-mark">🔎</span>
+        <span class="logo-text">achadista</span>
+      </a>
+      <form class="search" id="searchForm" role="search">
+        <input id="q" type="search" autocomplete="off" placeholder="Buscar achados ou digitar o código do post (ex: A101)" aria-label="Buscar">
+        <button type="submit" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+        </button>
+      </form>
+      <a class="ig-btn" id="igTop" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        <span id="igHandleTop">@achadista</span>
+      </a>
+    </div>
+    <nav class="wrap cats" id="cats" aria-label="Categorias"></nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Viu no Instagram?</p>
+        <h1>Digite o código do post e vá direto ao achado.</h1>
+        <p>Todo dia a gente garimpa ofertas de verdade no Mercado Livre. Cada post tem um código, tipo <button class="code-chip" data-code="A101">A101</button>. É só buscar aqui em cima.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" id="igHero" target="_blank" rel="noopener">Seguir no Instagram</a>
+          <a class="btn btn-ghost" id="groupHero" target="_blank" rel="noopener">Entrar no grupo de ofertas</a>
+        </div>
+      </div>
+      <div class="hero-deal" id="dealOfDay" aria-label="Achado do dia"></div>
+    </section>
+
+    <section class="toolbar">
+      <h2 id="listTitle">Achados de hoje</h2>
+      <div class="toolbar-right">
+        <label class="chk"><input type="checkbox" id="fFree"> Frete grátis</label>
+        <label class="sort">Ordenar
+          <select id="sort">
+            <option value="new">Mais recentes</option>
+            <option value="discount">Maior desconto</option>
+            <option value="low">Menor preço</option>
+            <option value="high">Maior preço</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+    <p class="empty" id="empty" hidden>Nenhum achado encontrado. Tente outra palavra ou <a href="./">veja todos</a>.</p>
+
+    <section class="cta-band">
+      <div>
+        <h3>Não perca o próximo achado</h3>
+        <p>As melhores ofertas acabam rápido. Siga o Achadista e ative as notificações.</p>
+      </div>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" id="igBand" target="_blank" rel="noopener">Seguir @achadista</a>
+        <a class="btn btn-ghost" id="groupBand" target="_blank" rel="noopener">Grupo de ofertas</a>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <h3>Como funciona</h3>
+      <ol>
+        <li><strong>A gente garimpa.</strong> Comparamos preço e histórico antes de postar.</li>
+        <li><strong>Você vê no Instagram.</strong> Cada achado tem um código no post ou story.</li>
+        <li><strong>Você compra no Mercado Livre.</strong> O pagamento, a entrega e a garantia são do Mercado Livre e do vendedor.</li>
+      </ol>
+      <p class="fine">O Achadista é um perfil independente e participa do programa de afiliados do Mercado Livre. Não somos o Mercado Livre nem temos vínculo com os vendedores. Preços e estoque podem mudar a qualquer momento: confira sempre o valor final na página do produto. Este site não usa cookies de rastreamento nem coleta dados pessoais.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-row">
+      <span>© <span id="year"></span> Achadista</span>
+      <span>Links de afiliado · <a id="igFoot" target="_blank" rel="noopener">Instagram</a></span>
+    </div>
+  </footer>
+
+  <dialog id="dealDialog" aria-label="Detalhes do achado">
+    <div class="dlg" id="dlgBody"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
